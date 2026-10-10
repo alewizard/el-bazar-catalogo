@@ -538,6 +538,10 @@
   .ship-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px;}
   .ship-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px;}
   .ship-card h3{font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:16px; margin:0 0 10px;}
+  .ship-meta{font-size:12px; color:var(--text-dim); margin-top:6px;}
+  .ship-filter{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px;}
+  .ship-chip{font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.03em; font-size:12.5px; background:transparent; border:1px solid var(--line); color:var(--text-dim); padding:7px 12px; border-radius:9px; cursor:pointer;}
+  .ship-chip.active{background:var(--gold-grad); color:#1a1300; border-color:var(--amber);}
   .ship-block-label{font-size:11px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; margin:10px 0 4px; text-transform:uppercase;}
 
   .field{display:flex; flex-direction:column; gap:6px;}
@@ -800,7 +804,8 @@ html{scroll-behavior:smooth;}
 </div>
 </section>
 <section class="panel" id="panel-envios">
-<p class="hint" style="margin-bottom:14px;">Costo de envío según cantidad de piezas por pedido. Algunos vendedores tienen tarifas separadas para Argentina, Colombia o Perú.</p>
+<p class="hint" style="margin-bottom:14px;">Condiciones de envío que cada vendedor cargó, por país: tarifas, plazo y courier. Confirmá siempre los datos con el vendedor antes de comprar.</p>
+<div class="ship-filter" id="shipFilter"></div>
 <div class="ship-grid" id="shipGrid"></div>
 </section>
 <section class="panel" id="panel-rastreo">
@@ -1125,12 +1130,18 @@ function applyTheme(){
 }
 
 /* ---------------- HELPERS ---------------- */
+function shipCountryRows(v){ return Array.isArray(v.shipCountries) ? v.shipCountries : []; }
+function shipCountryHtml(c){
+  const pills = c.tiers.map(s=>`<span class="ship-pill">${escapeHtml(s.label)}: ${escapeHtml(s.value)}</span>`).join('');
+  const meta = [c.time ? '⏱️ '+escapeHtml(c.time) : '', c.carrier ? '🚚 '+escapeHtml(c.carrier) : ''].filter(Boolean).join(' · ');
+  return `<div class="ship-block-label">${escapeHtml(c.country)}</div><div class="ship-row">${pills}</div>${meta ? `<div class="ship-meta">${meta}</div>` : ''}`;
+}
 function hasFreeShipping(v){
-  const all = [...(v.shipping||[]), ...(v.argShipping||[]), ...((v.extraShipping&&v.extraShipping.tiers)||[])];
+  const all = [...(v.shipping||[]), ...(v.argShipping||[]), ...((v.extraShipping&&v.extraShipping.tiers)||[]), ...shipCountryRows(v).flatMap(c=>c.tiers)];
   return all.some(s => /gratis|free/i.test(s.value) || /^0\$?$/.test(s.value.trim()));
 }
 function shareVendorWhatsApp(v){
-  const lines = [`*${v.name}* — Lista de precios`, ...v.prices.map(pr=>`${pr.label}: ${pr.value}`), '', 'Envío:', ...v.shipping.map(s=>`${s.label}: ${s.value}`)];
+  const lines = [`*${v.name}* — Lista de precios`, ...v.prices.map(pr=>`${pr.label}: ${pr.value}`), '', 'Envío:', ...v.shipping.map(s=>`${s.label}: ${s.value}`), ...shipCountryRows(v).map(c=>`${c.country}: ${c.tiers.map(s=>`${s.label} ${s.value}`).join(' · ')}`)];
   if(v.contacts && v.contacts[0]) lines.push('', `Contacto: ${v.contacts[0].url}`);
   const text = encodeURIComponent(lines.join('\n'));
   window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank', 'noopener');
@@ -1196,11 +1207,15 @@ function renderVendorCards(){
     const priceItems = v.prices.map(pr => `<li><span>${pr.label}</span><span class="v">${pr.value}</span></li>`).join('');
     const shipPills = v.shipping.map(s => `<span class="ship-pill">${s.label}: ${s.value}</span>`).join('');
     const priceBlock = v.prices.length ? `<div><div class="section-label">Precios</div><ul class="price-list">${priceItems}</ul></div>` : '';
-    const shipBlock = v.shipping.length ? `<div><div class="section-label">Envío</div><div class="ship-row">${shipPills}</div></div>` : '';
+    const countryShip = shipCountryRows(v);
+    const shipBlock = countryShip.length
+      ? `<div><div class="section-label">Envío</div>${countryShip.map(shipCountryHtml).join('')}</div>`
+      : (v.shipping.length ? `<div><div class="section-label">Envío</div><div class="ship-row">${shipPills}</div></div>` : '');
     const contacts = v.contacts.map(c => {
       const type = c.type || 'otro';
       const icon = CONTACT_ICONS[type] || CONTACT_ICONS.otro;
-      return `<a class="contact-link" data-type="${type}" href="${c.url}" target="_blank" rel="noopener">${icon} ${c.label}</a>`;
+      const safeUrl = /^https?:\/\//i.test(c.url || '') ? c.url : '#';
+      return `<a class="contact-link" data-type="${escapeHtml(type)}" href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener">${icon} ${escapeHtml(c.label)}</a>`;
     }).join('');
     const note = v.note ? `<div class="note">${v.note}</div>` : '';
     const isFav = favorites.includes(v.id);
@@ -1213,7 +1228,7 @@ function renderVendorCards(){
         })()
       : '';
     const categoryTags = (v.categories||[]).length
-      ? `<div class="vendor-cat-tags">${v.categories.map(c=>`<span class="vendor-cat-tag">${c.emoji?c.emoji+' ':''}${c.name}</span>`).join('')}</div>`
+      ? `<div class="vendor-cat-tags">${v.categories.map(c=>`<span class="vendor-cat-tag">${c.emoji?escapeHtml(c.emoji)+' ':''}${escapeHtml(c.name)}</span>`).join('')}</div>`
       : '';
     // Mismo sello que ya se ve en su topic de Telegram y en su banner --
     // sin esto, quien entra a la web desde Google o un link compartido
@@ -1230,7 +1245,7 @@ function renderVendorCards(){
     const monthBadge = v.monthWinner ? `<span class="vendor-month-badge">🏅 Vendedor del mes</span>` : '';
 
     let tags = '';
-    if(v.tag) tags += `<span class="tag-warn">${v.tag}</span>`;
+    if(v.tag) tags += `<span class="tag-warn">${escapeHtml(v.tag)}</span>`;
     if(hasFreeShipping(v)) tags += `<span class="tag-free">Envío gratis disp.</span>`;
 
     let extra = '';
@@ -1244,7 +1259,7 @@ function renderVendorCards(){
 
     return `<div class="card card-enter" style="animation-delay:${Math.min(idx,10)*35}ms">
       <div class="card-head">
-        <span class="card-title"><span class="vendor-badge">${v.name.charAt(0).toUpperCase()}</span>${v.name}${monthBadge}${statusBadge}</span>
+        <span class="card-title"><span class="vendor-badge">${escapeHtml(v.name.charAt(0).toUpperCase())}</span>${escapeHtml(v.name)}${monthBadge}${statusBadge}</span>
         <div style="display:flex; align-items:flex-start; gap:8px;">
           <div class="tag-row">${tags}</div>
           <button class="fav-btn ${isFav?'active':''}" data-favid="${v.id}" aria-label="Marcar como favorito" title="Favorito">${isFav?'★':'☆'}</button>
@@ -1442,13 +1457,38 @@ function initTrackingTool(){
   if(resetBtn) resetBtn.addEventListener('click', resetTracking);
 }
 /* ---------------- RENDER: SHIPPING ---------------- */
+let shipCountryFilter = '';
 function renderShipping(){
   const grid = document.getElementById('shipGrid');
-  grid.innerHTML = BASE_VENDORS.map(v=>{
-    let html = `<div class="ship-card"><h3>${v.name}</h3>`;
-    html += `<div class="ship-block-label">Base</div><div class="ship-row">${v.shipping.map(s=>`<span class="ship-pill">${s.label}: ${s.value}</span>`).join('')}</div>`;
-    if(v.argShipping) html += `<div class="ship-block-label">Argentina</div><div class="ship-row">${v.argShipping.map(s=>`<span class="ship-pill">${s.label}: ${s.value}</span>`).join('')}</div>`;
-    if(v.extraShipping) html += `<div class="ship-block-label">${v.extraShipping.label}</div><div class="ship-row">${v.extraShipping.tiers.map(s=>`<span class="ship-pill">${s.label}: ${s.value}</span>`).join('')}</div>`;
+  const bar = document.getElementById('shipFilter');
+  const countries = [...new Set(BASE_VENDORS.flatMap(v=>shipCountryRows(v).map(c=>c.country)))].sort();
+  if(shipCountryFilter && !countries.includes(shipCountryFilter)) shipCountryFilter = '';
+  if(bar){
+    bar.innerHTML = countries.length
+      ? ['', ...countries].map(c=>`<button type="button" class="ship-chip ${c===shipCountryFilter?'active':''}" data-country="${escapeHtml(c)}">${c ? escapeHtml(c) : 'Todos'}</button>`).join('')
+      : '';
+    bar.querySelectorAll('.ship-chip').forEach(b=>b.addEventListener('click', ()=>{
+      shipCountryFilter = b.dataset.country || '';
+      renderShipping();
+    }));
+  }
+  const vendors = BASE_VENDORS.filter(v => !shipCountryFilter || shipCountryRows(v).some(c=>c.country===shipCountryFilter));
+  if(!vendors.length){
+    grid.innerHTML = `<p class="hint">Ningún vendedor cargó envíos a ${escapeHtml(shipCountryFilter)} todavía.</p>`;
+    return;
+  }
+  grid.innerHTML = vendors.map(v=>{
+    let html = `<div class="ship-card"><h3>${escapeHtml(v.name)}</h3>`;
+    const rows = shipCountryRows(v).filter(c=>!shipCountryFilter || c.country===shipCountryFilter);
+    if(rows.length){
+      html += rows.map(shipCountryHtml).join('');
+    } else if(v.shipping.length || v.argShipping || v.extraShipping){
+      html += `<div class="ship-block-label">Base</div><div class="ship-row">${v.shipping.map(s=>`<span class="ship-pill">${s.label}: ${s.value}</span>`).join('')}</div>`;
+      if(v.argShipping) html += `<div class="ship-block-label">Argentina</div><div class="ship-row">${v.argShipping.map(s=>`<span class="ship-pill">${s.label}: ${s.value}</span>`).join('')}</div>`;
+      if(v.extraShipping) html += `<div class="ship-block-label">${v.extraShipping.label}</div><div class="ship-row">${v.extraShipping.tiers.map(s=>`<span class="ship-pill">${s.label}: ${s.value}</span>`).join('')}</div>`;
+    } else {
+      html += `<p class="hint" style="margin:0;">Todavía no cargó sus condiciones de envío.</p>`;
+    }
     html += '</div>';
     return html;
   }).join('');
