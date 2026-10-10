@@ -258,6 +258,7 @@
 
   /* Contenido de los tutoriales: misma legibilidad que la sección Ming */
   #panel-guia .compare-card,
+#panel-shopee .compare-card,
   #panel-preguntas .compare-card,
   #panel-legal .compare-card,
   #panel-matchday .compare-card,
@@ -266,6 +267,7 @@
     color:var(--text);
   }
   #panel-guia .compare-card > h2,
+#panel-shopee .compare-card > h2,
   #panel-preguntas .compare-card > h2,
   #panel-legal .compare-card > h2,
   #panel-matchday .compare-card > h2,
@@ -277,6 +279,7 @@
     margin-bottom:18px;
   }
   #panel-guia .note,
+#panel-shopee .note,
   #panel-preguntas .note,
   #panel-legal .note,
   #panel-matchday .note,
@@ -292,6 +295,7 @@
     padding:16px 18px;
   }
   #panel-guia .note h3,
+#panel-shopee .note h3,
   #panel-preguntas .note h3,
   #panel-legal .note h3,
   #panel-matchday .note h3{
@@ -302,9 +306,11 @@
     letter-spacing:.01em;
   }
   #panel-guia .note p,
+#panel-shopee .note p,
   #panel-preguntas .note p,
   #panel-legal .note p,
   #panel-guia .note li,
+#panel-shopee .note li,
   #panel-preguntas .note li,
   #panel-legal .note li,
   #panel-matchday .note p,
@@ -317,11 +323,13 @@
     line-height:1.7;
   }
   #panel-guia .note a,
+#panel-shopee .note a,
   #panel-preguntas .note a,
   #panel-legal .note a,
   #panel-matchday .note a,
   #panel-buscar .note a{color:var(--amber);}
   #panel-guia strong,
+#panel-shopee strong,
   #panel-preguntas strong,
   #panel-legal strong,
   #panel-matchday strong,
@@ -335,10 +343,14 @@
   .quick-nav{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px;}
   .quick-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);text-decoration:none;font-size:12px;font-weight:600;transition:.15s ease;}
   .quick-nav a:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-1px);}
-  #panel-guia .note,#panel-preguntas .note,#panel-legal .note,#panel-ming .note,#panel-matchday .note,#panel-buscar .note{box-shadow:var(--shadow-sm);}
-  #panel-guia .note{position:relative;padding-left:20px;}
-  #panel-guia .note h3{display:flex;align-items:center;gap:9px;}
-  #panel-guia .note h3::before{content:'✓';display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:rgba(242,183,5,.13);border:1px solid rgba(242,183,5,.35);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:12px;flex:none;}
+  #panel-guia .note,
+#panel-shopee .note,#panel-preguntas .note,#panel-legal .note,#panel-ming .note,#panel-matchday .note,#panel-buscar .note{box-shadow:var(--shadow-sm);}
+  #panel-guia .note,
+#panel-shopee .note{position:relative;padding-left:20px;}
+  #panel-guia .note h3,
+#panel-shopee .note h3{display:flex;align-items:center;gap:9px;}
+  #panel-guia .note h3::before,
+#panel-shopee .note h3::before{content:'✓';display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:rgba(242,183,5,.13);border:1px solid rgba(242,183,5,.35);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:12px;flex:none;}
   #panel-preguntas .faq-item,#panel-legal .faq-item{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:10px 0;overflow:hidden;box-shadow:var(--shadow-sm);}
   #panel-preguntas .faq-item summary,#panel-legal .faq-item summary{list-style:none;padding:15px 17px;color:var(--text);font-family:'Oswald',sans-serif;font-size:17px;letter-spacing:.01em;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;}
   #panel-preguntas .faq-item summary::-webkit-details-marker,#panel-legal .faq-item summary::-webkit-details-marker{display:none;}
@@ -613,7 +625,8 @@ html{scroll-behavior:smooth;}
 .quick-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 15px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--text);text-decoration:none;font-weight:700;transition:transform .15s ease,background .15s ease,border-color .15s ease;}
 .quick-nav a:hover,.quick-nav a:focus-visible{transform:translateY(-1px);border-color:var(--amber);outline:none;}
 .tutorial-intro{font-size:1rem;line-height:1.7;color:var(--text);}
-#panel-guia .note,#panel-preguntas .note,#panel-ming .note,#panel-matchday .note{scroll-margin-top:90px;}
+#panel-guia .note,
+#panel-shopee .note,#panel-preguntas .note,#panel-ming .note,#panel-matchday .note{scroll-margin-top:90px;}
 .tutorial-step-actions{display:flex;justify-content:flex-end;margin-top:12px;}
 .tutorial-step-actions a{color:var(--text);text-decoration:none;font-weight:700;}
 .back-top{position:fixed;right:18px;bottom:18px;z-index:1000;display:none;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--text);font-size:20px;font-weight:700;box-shadow:var(--shadow-sm);cursor:pointer;}
@@ -621,10 +634,14 @@ html{scroll-behavior:smooth;}
 @media (max-width:700px){
   .quick-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .quick-nav a{width:100%;box-sizing:border-box;font-size:.92rem;padding:9px 8px;}
-  #panel-guia .compare-card,#panel-preguntas .compare-card,#panel-ming .compare-card,#panel-matchday .compare-card,#panel-buscar .compare-card{padding:15px!important;}
-  #panel-guia h2,#panel-preguntas h2,#panel-ming h2,#panel-matchday h2,#panel-buscar h2{font-size:1.35rem;}
-  #panel-guia h3,#panel-preguntas h3,#panel-ming h3,#panel-matchday h3,#panel-buscar h3{font-size:1.05rem;line-height:1.35;}
-  #panel-guia p,#panel-preguntas p,#panel-preguntas li,#panel-ming p,#panel-ming li,#panel-matchday p,#panel-matchday li,#panel-buscar p,#panel-buscar li{font-size:.96rem;line-height:1.65;}
+  #panel-guia .compare-card,
+#panel-shopee .compare-card,#panel-preguntas .compare-card,#panel-ming .compare-card,#panel-matchday .compare-card,#panel-buscar .compare-card{padding:15px!important;}
+  #panel-guia h2,
+#panel-shopee h2,#panel-preguntas h2,#panel-ming h2,#panel-matchday h2,#panel-buscar h2{font-size:1.35rem;}
+  #panel-guia h3,
+#panel-shopee h3,#panel-preguntas h3,#panel-ming h3,#panel-matchday h3,#panel-buscar h3{font-size:1.05rem;line-height:1.35;}
+  #panel-guia p,
+#panel-shopee p,#panel-preguntas p,#panel-preguntas li,#panel-ming p,#panel-ming li,#panel-matchday p,#panel-matchday li,#panel-buscar p,#panel-buscar li{font-size:.96rem;line-height:1.65;}
   #panel-ming img{max-width:100%;height:auto;border-radius:10px;}
 }
 
@@ -732,6 +749,7 @@ html{scroll-behavior:smooth;}
 <button class="tab-btn" data-tab="envios">Envíos</button>
 <button class="tab-btn" data-tab="rastreo">🚚 Rastrear envío</button>
 <button class="tab-btn" data-tab="guia">Cómo comprar paso a paso</button>
+<button class="tab-btn" data-tab="shopee">🛍️ Guía Shopee</button>
 <button class="tab-btn" data-tab="preguntas">Dudas habituales</button>
 <button class="tab-btn" data-tab="legal">📄 Términos de uso</button>
 <button class="edit-toggle" id="themeToggleBtn" title="Cambiar tema claro/oscuro">🌙 Oscuro</button>
@@ -843,7 +861,7 @@ html{scroll-behavior:smooth;}
 </section><section class="panel" id="panel-guia">
 <div class="compare-card" style="padding:20px;">
 <h2 style="margin-top:0;">Cómo comprar paso a paso</h2>
-<div class="tutorial-intro"><p>Guía actualizada para compras internacionales hacia Argentina, teniendo en cuenta el régimen vigente de ARCA. Antes de comprar, verificá si tu operación corresponde a <strong>uso personal</strong> o a una importación comercial.</p></div>
+<div class="tutorial-intro"><p>Guía actualizada para compras internacionales hacia Argentina, teniendo en cuenta el régimen vigente de ARCA. Antes de comprar, verificá si tu operación corresponde a <strong>uso personal</strong> o a una importación comercial. ¿Vas a comprar en Shopee? Mirá la <a href="#shopee" onclick="document.querySelector('[data-tab=&quot;shopee&quot;]').click(); return false;">guía específica de Shopee</a>.</p></div>
 <div class="quick-nav" aria-label="Acceso rápido a cada paso">
 <a href="#guia-paso-1">1. Elegir</a><a href="#guia-paso-2">2. Confirmar</a><a href="#guia-paso-3">3. Pagar</a><a href="#guia-paso-4">4. Enviar</a><a href="#guia-paso-5">5. Declarar</a><a href="#guia-paso-6">6. Tributos</a><a href="#guia-paso-7">7. Entrega</a>
 </div>
@@ -886,6 +904,91 @@ html{scroll-behavior:smooth;}
 <p>Si el paquete queda observado por Aduana o se requiere documentación adicional, seguí las instrucciones del operador y de ARCA.</p>
 </div>
 <div class="note" style="margin:16px 0;"><h3 style="margin-top:0;">📌 Resumen rápido</h3><ul style="line-height:1.8;"><li><strong>Uso personal:</strong> podés utilizar los regímenes simplificados si cumplís sus requisitos.</li><li><strong>Hasta USD 400 FOB:</strong> existe franquicia de derechos de importación y tasa de estadística en los regímenes indicados, pero pueden corresponder otros impuestos.</li><li><strong>Más de USD 400:</strong> se aplican los tributos correspondientes sobre el excedente, según el régimen.</li><li><strong>5 envíos:</strong> el límite anual de la franquicia es de 5 envíos por persona.</li><li><strong>Declaración:</strong> siempre debe reflejar la cantidad y el valor reales de la compra.</li><li><strong>Compra comercial:</strong> no debe encuadrarse artificialmente como uso personal; corresponde analizar el régimen de importación aplicable.</li></ul></div>
+</div>
+</section>
+<section class="panel" id="panel-shopee">
+<div class="compare-card" style="padding:20px;">
+<h2 style="margin-top:0;">🛍️ Guía de compra en Shopee Argentina</h2>
+<div class="tutorial-intro"><p>Cómo comprar en Shopee y recibir el paquete en tu casa con el régimen de <strong>Pequeños Envíos por Courier</strong> de ARCA. Aplica a compras de <strong>uso personal</strong>. Las reglas generales, con más detalle, están en <a href="#guia" onclick="document.querySelector('[data-tab=&quot;guia&quot;]').click(); return false;">Cómo comprar paso a paso</a>.</p></div>
+<div class="quick-nav" aria-label="Acceso rápido a cada sección">
+<a href="#shopee-normativa">1. Requisitos</a><a href="#shopee-flujo">2. Recorrido</a><a href="#shopee-paso-1">3. Paso a paso</a><a href="#shopee-ejemplo">4. Ejemplo</a><a href="#shopee-resumen">5. Resumen</a>
+</div>
+<div id="shopee-normativa" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">1. Requisitos y límites en Argentina</h3>
+<ul style="line-height:1.8;">
+<li><strong>Franquicia por envío:</strong> los primeros <strong>USD 400 FOB</strong> de cada envío están exentos de derechos de importación y tasa de estadística. Siguen correspondiendo IVA e impuestos internos, si corresponden.</li>
+<li><strong>Cantidad de envíos:</strong> hasta <strong>5 por año calendario</strong> y por persona (CUIL/CUIT).</li>
+<li><strong>Qué podés comprar:</strong> mercadería de uso personal, hasta 3 unidades iguales de la misma especie, hasta 50 kg por paquete y hasta USD 3.000 por envío.</li>
+<li><strong>Entrega directa:</strong> el courier asignado (DHL, FedEx u otra empresa) gestiona la aduana y entrega el paquete en tu domicilio.</li>
+</ul>
+</div>
+<div id="shopee-flujo" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">2. Recorrido del paquete con courier privado</h3>
+<ol style="line-height:1.8;">
+<li><strong>Compra en la app:</strong> cargás tu CUIL/CUIT y tu dirección.</li>
+<li><strong>Despacho en origen:</strong> se asigna el número de seguimiento.</li>
+<li><strong>Gestión aduanera:</strong> el courier hace la declaración ante ARCA.</li>
+<li><strong>Entrega en puerta:</strong> recibís el paquete y confirmás el pedido.</li>
+</ol>
+</div>
+<h3 style="margin:22px 0 4px;">3. Instructivo paso a paso</h3>
+<div id="shopee-paso-1" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">1. Registro y datos fiscales</h3>
+<p>Descargá la app de Shopee o ingresá a shopee.com.ar. Creá tu cuenta y andá a <strong>Yo &gt; Mi Cuenta &gt; Dirección de Entrega</strong>. Es obligatorio incluir:</p>
+<ul style="line-height:1.8;">
+<li><strong>Dirección exacta:</strong> calle, número, piso, departamento y código postal oficial.</li>
+<li><strong>Identificación fiscal:</strong> número de CUIL o CUIT. Sin este dato, el courier no puede formalizar el despacho de importación simplificado.</li>
+</ul>
+</div>
+<div id="shopee-paso-2" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">2. Búsqueda y selección del producto</h3>
+<p>Explorá el catálogo de productos internacionales. Verificá la reputación del vendedor y consultá las fotos publicadas en la sección de opiniones. Elegí talle, color o modelo y presioná <strong>Agregar al carrito</strong> o <strong>Comprar ahora</strong>.</p>
+<p><strong>Importante:</strong> comprá solo para uso personal y no dividas una compra comercial en varios paquetes para encuadrarla en este régimen.</p>
+</div>
+<div id="shopee-paso-3" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">3. Cupones de descuento</h3>
+<p>Antes de confirmar el pedido, entrá a tu carrito y elegí la casilla <strong>Cupón Shopee</strong>. Podés aplicar descuentos sobre el precio del artículo o promociones de bonificación en el costo del envío internacional.</p>
+</div>
+<div id="shopee-paso-4" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">4. Pago y Garantía Shopee</h3>
+<p>Pagá con una tarjeta de crédito o débito habilitada para consumos en moneda extranjera. Tu dinero queda protegido por la <strong>Garantía Shopee</strong>, que retiene los fondos y solo los libera al vendedor cuando confirmás que recibiste el producto. Guardá el comprobante de pago y la factura.</p>
+</div>
+<div id="shopee-paso-5" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">5. Transporte, aduana y tributos</h3>
+<p>La plataforma asigna un courier privado, que presenta la declaración aduanera simplificada. Si el valor FOB del envío supera USD 400, los derechos de importación y la tasa de estadística se calculan <strong>solo sobre el excedente</strong>. Además corresponden IVA e impuestos internos, si corresponden.</p>
+<p>El courier te informa el importe y puede pedirte que lo pagues antes de la entrega. El flete y los cargos del operador se consideran aparte de la franquicia.</p>
+</div>
+<div id="shopee-paso-6" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">6. Recepción en domicilio y confirmación</h3>
+<p>Rastreá el paquete desde <strong>Mis Compras &gt; En Camino</strong>. Al recibirlo, inspeccionalo y presioná <strong>Pedido Recibido</strong> en la aplicación para dar por finalizada la transacción.</p>
+</div>
+<div id="shopee-ejemplo" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">4. Ejemplo</h3>
+<p>Si tu envío tiene un valor FOB de <strong>USD 350</strong> y todavía te queda uno de tus 5 envíos del año, no pagás derechos de importación ni tasa de estadística. Sí corresponde IVA y, si corresponde, impuestos internos.</p>
+<p>Si el envío fuera de <strong>USD 500</strong>, la franquicia cubre los primeros USD 400, y los derechos de importación y la tasa de estadística se calculan sobre los USD 100 restantes.</p>
+<p>Si ya usaste los 5 envíos del año, el siguiente se paga con el régimen general, sin franquicia.</p>
+</div>
+<div class="note" style="margin:16px 0; border-left:3px solid currentColor;"><h3 style="margin-top:0;">⚠️ Recomendaciones importantes</h3><p>Para evitar demoras, mantenete dentro de los 5 envíos por año calendario y verificá que tu CUIT/CUIL no tenga inconsistencias fiscales ni claves inactivas. La descripción, cantidad y valor del envío tienen que reflejar siempre lo que realmente compraste.</p></div>
+<div id="shopee-resumen" class="note tutorial-step" style="margin:16px 0;">
+<h3 style="margin-top:0;">5. Resumen de condiciones</h3>
+<div style="overflow-x:auto;">
+<table style="width:100%; border-collapse:collapse; line-height:1.5;">
+<thead><tr>
+<th style="text-align:left; padding:8px 10px; border-bottom:1px solid var(--line);">Concepto</th>
+<th style="text-align:left; padding:8px 10px; border-bottom:1px solid var(--line);">Límite / condición</th>
+<th style="text-align:left; padding:8px 10px; border-bottom:1px solid var(--line);">Detalle</th>
+</tr></thead>
+<tbody>
+<tr><td style="padding:8px 10px; border-bottom:1px solid var(--line);"><strong>Envíos por año</strong></td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">Hasta 5 por año calendario</td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">Por persona (CUIL/CUIT)</td></tr>
+<tr><td style="padding:8px 10px; border-bottom:1px solid var(--line);"><strong>Franquicia</strong></td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">USD 400 FOB por envío</td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">Exento de derechos de importación y tasa de estadística; IVA e impuestos internos, si corresponden</td></tr>
+<tr><td style="padding:8px 10px; border-bottom:1px solid var(--line);"><strong>Excedente</strong></td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">Lo que supere USD 400 FOB</td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">Derechos de importación y tasa de estadística se calculan sobre ese excedente</td></tr>
+<tr><td style="padding:8px 10px; border-bottom:1px solid var(--line);"><strong>Límites del envío</strong></td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">Hasta USD 3.000, 3 unidades iguales y 50 kg</td><td style="padding:8px 10px; border-bottom:1px solid var(--line);">Solo uso personal, sin finalidad comercial</td></tr>
+<tr><td style="padding:8px 10px;"><strong>Entrega</strong></td><td style="padding:8px 10px;">Puerta a puerta</td><td style="padding:8px 10px;">La gestiona el courier asignado</td></tr>
+</tbody>
+</table>
+</div>
+<p class="hint" style="margin:14px 0 0;">Datos tomados de los sitios oficiales de ARCA (<a href="https://www.afip.gob.ar/envios-internacionales/courier/importacion/pequenios-envios.asp" target="_blank" rel="noopener noreferrer">Pequeños Envíos</a> y <a href="https://www.arca.gob.ar/envios-internacionales/puerta-a-puerta/exencion.asp" target="_blank" rel="noopener noreferrer">Puerta a Puerta</a>), consultados en octubre de 2026. La normativa cambia seguido: confirmá siempre en ARCA antes de comprar.</p>
+</div>
 </div>
 </section>
 <section class="panel" id="panel-legal">
