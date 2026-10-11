@@ -136,7 +136,7 @@
   .stat-chip b{color:var(--amber); font-weight:700;}
 
   nav.tabs{
-    max-width:1100px; margin:20px auto 0; padding:10px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; align-items:stretch;
+    max-width:1100px; margin:20px auto 0; padding:10px; display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:7px; align-items:stretch;
     position:sticky; top:14px; z-index:20; background:rgba(10,20,14,0.82); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
     border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-sm); margin-left:20px; margin-right:20px;
   }
@@ -737,6 +737,16 @@ html{scroll-behavior:smooth;}
   .smart-buy h2{font-size:23px}
 }
 </style>
+<style>
+.guide-subnav[hidden]{display:none;}
+.card-head{flex-wrap:wrap; row-gap:8px;}
+.card-title{flex-wrap:wrap; min-width:0;}
+.vendor-history{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 2px;}
+.history-chip{font-size:12px; color:var(--text-dim); border:1px solid var(--line); border-radius:999px; padding:3px 10px; line-height:1.4;}
+.history-reviews{flex-basis:100%; margin-top:2px;}
+.history-reviews summary{cursor:pointer; font-size:12px; color:var(--text-dim);}
+.history-review{font-size:13px; margin-top:6px; color:var(--text); line-height:1.45;}
+</style>
 </head>
 <body>
 <div aria-hidden="true" class="goal-net-bg"></div>
@@ -752,13 +762,15 @@ html{scroll-behavior:smooth;}
 <button class="tab-btn" data-tab="buscar">🔎 Buscar en catálogos</button>
 <button class="tab-btn" data-tab="envios">Envíos</button>
 <button class="tab-btn" data-tab="rastreo">🚚 Rastrear envío</button>
-<button class="tab-btn" data-tab="guia">Cómo comprar paso a paso</button>
-<button class="tab-btn" data-tab="shopee">🛍️ Guía Shopee</button>
-<button class="tab-btn" data-tab="preguntas">Dudas habituales</button>
-<button class="tab-btn" data-tab="legal">📄 Términos de uso</button>
+<button class="tab-btn" data-tab="guia">📚 Guías</button>
 <button class="edit-toggle" id="themeToggleBtn" title="Cambiar tema claro/oscuro">🌙 Oscuro</button>
 </nav>
 <main>
+<div class="ship-filter guide-subnav" id="guideSubnav" hidden>
+<button type="button" class="ship-chip" data-guide="guia">Cómo comprar</button>
+<button type="button" class="ship-chip" data-guide="shopee">🛍️ Shopee</button>
+<button type="button" class="ship-chip" data-guide="preguntas">Dudas habituales</button>
+</div>
 <section class="panel active" id="panel-lista">
 <div class="toolbar">
 <div class="search-wrap" style="position:relative; flex:1; min-width:200px;">
@@ -771,6 +783,7 @@ html{scroll-behavior:smooth;}
 <option value="nameDesc">Ordenar: Nombre (Z-A)</option>
 <optgroup id="sortCatGroup" label="Por precio de categoría"></optgroup>
 </select>
+<select class="sort-select" id="countryFilter" aria-label="Filtrar por país de envío"></select>
 <label class="filter-chip">
 <input id="freeShipFilter" type="checkbox"/><span>📦 Envío gratis</span>
       </label>
@@ -781,7 +794,7 @@ html{scroll-behavior:smooth;}
 <div class="category-chips" id="categoryChips"></div>
 <p class="hint" id="resultsCount" style="margin:-6px 0 14px;"></p>
 <div class="grid" id="vendorGrid"></div>
-<p class="hint" style="margin-top:16px; text-align:center;">📌 Esta página es un <strong>comparador informativo, no una tienda</strong>: no vendemos, no procesamos pagos ni somos parte de ninguna transacción. Todo se coordina directo con el vendedor. <a href="#" onclick="document.querySelector('[data-tab=&quot;legal&quot;]').click(); return false;">Ver términos de uso</a>.</p>
+<p class="hint" style="margin-top:16px; text-align:center;">📌 Esta página es un <strong>comparador informativo, no una tienda</strong>: no vendemos, no procesamos pagos ni somos parte de ninguna transacción. Todo se coordina directo con el vendedor. <a href="#" onclick="selectTab('legal'); history.replaceState(null,'','#legal'); window.scrollTo(0,0); return false;">Ver términos de uso</a>.</p>
 </section>
 <section class="panel" id="panel-buscar">
 <div class="compare-card" style="padding:20px;">
@@ -861,12 +874,12 @@ html{scroll-behavior:smooth;}
 <div class="note" style="margin:16px 0;"><h3 style="margin-top:0;">¿Cómo sé cuándo enviaron mi pedido?</h3><p>Los vendedores pueden tardar en responder, así que es importante tener paciencia. Una vez confirmado el pago, normalmente pasan unos 4 o 5 días hasta que envían las fotos de las prendas terminadas y el número de seguimiento. Durante ese período están preparando y confeccionando las camisetas.</p></div>
 <div class="note" style="margin:16px 0;" id="faq-seguimiento"><h3 style="margin-top:0;">¿Dónde puedo seguir el envío?</h3><p>Andá a la pestaña <strong>🚚 Rastrear envío</strong> (arriba de todo, junto a "Envíos") y pegá tu código de seguimiento ahí: vas a ver el estado del paquete directo en la página, sin salir a 17TRACK.</p></div>
 <div class="note" style="margin:16px 0;"><h3 style="margin-top:0;">¿Qué pasa si el seguimiento todavía no aparece?</h3><p>Si ya recibiste el número de seguimiento, lo ingresaste en 17TRACK y todavía no muestra información, no te preocupes. Es normal que tarde entre 3 y 5 días en aparecer. Solo queda esperar a que el sistema se actualice.</p></div>
-<div class="note" style="margin:16px 0;" id="faq-legal"><h3 style="margin-top:0;">Aviso legal</h3><p>Esta página es un comparador informativo, sin fines de lucro. El detalle completo de los términos de uso, la política de privacidad y el aviso legal está en la pestaña <a href="#" onclick="document.querySelector('[data-tab=&quot;legal&quot;]').click(); return false;">📄 Términos de uso</a>.</p></div>
+<div class="note" style="margin:16px 0;" id="faq-legal"><h3 style="margin-top:0;">Aviso legal</h3><p>Esta página es un comparador informativo, sin fines de lucro. El detalle completo de los términos de uso, la política de privacidad y el aviso legal está en la pestaña <a href="#" onclick="selectTab('legal'); history.replaceState(null,'','#legal'); window.scrollTo(0,0); return false;">📄 Términos de uso</a>.</p></div>
 </div>
 </section><section class="panel" id="panel-guia">
 <div class="compare-card" style="padding:20px;">
 <h2 style="margin-top:0;">Cómo comprar paso a paso</h2>
-<div class="tutorial-intro"><p>Guía actualizada para compras internacionales hacia Argentina, teniendo en cuenta el régimen vigente de ARCA. Antes de comprar, verificá si tu operación corresponde a <strong>uso personal</strong> o a una importación comercial. ¿Vas a comprar en Shopee? Mirá la <a href="#shopee" onclick="document.querySelector('[data-tab=&quot;shopee&quot;]').click(); return false;">guía específica de Shopee</a>.</p></div>
+<div class="tutorial-intro"><p>Guía actualizada para compras internacionales hacia Argentina, teniendo en cuenta el régimen vigente de ARCA. Antes de comprar, verificá si tu operación corresponde a <strong>uso personal</strong> o a una importación comercial. ¿Vas a comprar en Shopee? Mirá la <a href="#shopee" onclick="selectTab('shopee'); history.replaceState(null,'','#shopee'); window.scrollTo(0,0); return false;">guía específica de Shopee</a>.</p></div>
 <div class="quick-nav" aria-label="Acceso rápido a cada paso">
 <a href="#guia-paso-1">1. Elegir</a><a href="#guia-paso-2">2. Confirmar</a><a href="#guia-paso-3">3. Pagar</a><a href="#guia-paso-4">4. Enviar</a><a href="#guia-paso-5">5. Declarar</a><a href="#guia-paso-6">6. Tributos</a><a href="#guia-paso-7">7. Entrega</a>
 </div>
@@ -914,7 +927,7 @@ html{scroll-behavior:smooth;}
 <section class="panel" id="panel-shopee">
 <div class="compare-card" style="padding:20px;">
 <h2 style="margin-top:0;">🛍️ Guía de compra en Shopee Argentina</h2>
-<div class="tutorial-intro"><p>Cómo comprar en Shopee y recibir el paquete en tu casa con el régimen de <strong>Pequeños Envíos por Courier</strong> de ARCA. Aplica a compras de <strong>uso personal</strong>. Las reglas generales, con más detalle, están en <a href="#guia" onclick="document.querySelector('[data-tab=&quot;guia&quot;]').click(); return false;">Cómo comprar paso a paso</a>.</p></div>
+<div class="tutorial-intro"><p>Cómo comprar en Shopee y recibir el paquete en tu casa con el régimen de <strong>Pequeños Envíos por Courier</strong> de ARCA. Aplica a compras de <strong>uso personal</strong>. Las reglas generales, con más detalle, están en <a href="#guia" onclick="selectTab('guia'); history.replaceState(null,'','#guia'); window.scrollTo(0,0); return false;">Cómo comprar paso a paso</a>.</p></div>
 <div class="quick-nav" aria-label="Acceso rápido a cada sección">
 <a href="#shopee-normativa">1. Requisitos</a><a href="#shopee-flujo">2. Recorrido</a><a href="#shopee-paso-1">3. Paso a paso</a><a href="#shopee-ejemplo">4. Ejemplo</a><a href="#shopee-resumen">5. Resumen</a>
 </div>
@@ -1024,7 +1037,7 @@ html{scroll-behavior:smooth;}
 </div>
 </section>
 </main>
-<footer>Datos de referencia — confirmá siempre precios y condiciones de envío directamente con cada vendedor antes de comprar. Esta es una versión de solo lectura: los favoritos y el tema se guardan en este navegador únicamente.</footer>
+<footer>Datos de referencia — confirmá siempre precios y condiciones de envío directamente con cada vendedor antes de comprar. Esta es una versión de solo lectura: los favoritos y el tema se guardan en este navegador únicamente. <a href="#legal" onclick="selectTab('legal'); history.replaceState(null,'','#legal'); window.scrollTo(0,0); return false;">Términos de uso</a>.</footer>
 <div aria-live="polite" class="toast-container" id="toastContainer"></div>
 <button class="back-top" id="backTop" type="button" aria-label="Volver arriba">↑</button>
 <div id="loadingOverlay">
@@ -1078,6 +1091,7 @@ let searchTerm = '';
 let sortMode = 'name';
 let freeShipOnly = false;
 let favOnly = false;
+let shipCountryFilter = '';
 let selectedCategory = null;
 const CONTACT_ICONS = {
   whatsapp: '💬', telegram: '✈️', instagram: '📸', tiktok: '🎵',
@@ -1132,6 +1146,38 @@ function applyTheme(){
 }
 
 /* ---------------- HELPERS ---------------- */
+const HIST_MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function populateCountrySelect(){
+  const sel = document.getElementById('countryFilter');
+  if(!sel) return;
+  const countries = [...new Set(BASE_VENDORS.flatMap(v=>shipCountryRows(v).map(c=>c.country)))].sort();
+  sel.innerHTML = '<option value="">🌎 Envía a: cualquier país</option>' + countries.map(c=>`<option value="${escapeHtml(c)}">Envía a ${escapeHtml(c)}</option>`).join('');
+  sel.style.display = countries.length ? '' : 'none';
+  sel.value = shipCountryFilter;
+}
+function historyHtml(v){
+  const h = v.history;
+  if(!h) return '';
+  const chips = [];
+  if(h.since && HIST_MESES[h.since.month-1]) chips.push(`📅 En la comunidad desde ${HIST_MESES[h.since.month-1]} de ${Number(h.since.year)}`);
+  if(h.clean) chips.push('🔥 Racha limpia: sin reportes ni advertencias recientes');
+  const p = h.purchases;
+  if(p && p.total > 0){
+    const n = Number(p.total);
+    chips.push(`🛒 ${n} compra${n!==1?'s':''} contada${n!==1?'s':''} en la comunidad (${Number(p.good)} buenas, ${Number(p.bad)} malas)`);
+  }
+  if(h.confirmed > 0){
+    const n = Number(h.confirmed);
+    chips.push(`✅ ${n} reseña${n!==1?'s':''} con compra confirmada`);
+  }
+  const reviews = (h.reviews||[]).map(r=>{
+    const st = Math.max(0, Math.min(5, Number(r.stars) || 0));
+    return `<div class="history-review">${'★'.repeat(st)}${'☆'.repeat(5-st)} «${escapeHtml(r.text)}»</div>`;
+  }).join('');
+  if(!chips.length && !reviews) return '';
+  const reviewsBlock = reviews ? `<details class="history-reviews"><summary>Últimas reseñas</summary>${reviews}</details>` : '';
+  return `<div class="vendor-history">${chips.map(c=>`<span class="history-chip">${c}</span>`).join('')}${reviewsBlock}</div>`;
+}
 function shipCountryRows(v){ return Array.isArray(v.shipCountries) ? v.shipCountries : []; }
 function shipCountryHtml(c){
   const pills = c.tiers.map(s=>`<span class="ship-pill">${escapeHtml(s.label)}: ${escapeHtml(s.value)}</span>`).join('');
@@ -1163,6 +1209,7 @@ function renderVendorCards(){
   });
   if(freeShipOnly) vendors = vendors.filter(hasFreeShipping);
   if(favOnly) vendors = vendors.filter(v=>favorites.includes(v.id));
+  if(shipCountryFilter) vendors = vendors.filter(v=>shipCountryRows(v).some(c=>c.country===shipCountryFilter));
   if(selectedCategory) vendors = vendors.filter(v=>(v.categories||[]).some(c=>c.name===selectedCategory));
 
   if(sortMode==='name'){
@@ -1187,7 +1234,7 @@ function renderVendorCards(){
   document.getElementById('resultsCount').textContent = `Mostrando ${vendors.length} de ${totalCount} vendedores${catMatchNote}`;
 
   if(vendors.length===0){
-    const hayFiltrosActivos = !!(term || freeShipOnly || favOnly || selectedCategory);
+    const hayFiltrosActivos = !!(term || freeShipOnly || favOnly || selectedCategory || shipCountryFilter);
     if(hayFiltrosActivos){
       grid.innerHTML = `<div class="empty-state">
         <div class="empty-state-icon">🔍</div>
@@ -1211,7 +1258,7 @@ function renderVendorCards(){
     const priceBlock = v.prices.length ? `<div><div class="section-label">Precios</div><ul class="price-list">${priceItems}</ul></div>` : '';
     const countryShip = shipCountryRows(v);
     const shipBlock = countryShip.length
-      ? `<div><div class="section-label">Envío</div>${countryShip.map(shipCountryHtml).join('')}</div>`
+      ? `<div><div class="section-label">Envío</div>${[...countryShip].sort((a,b)=>(b.country===shipCountryFilter)-(a.country===shipCountryFilter)).map(shipCountryHtml).join('')}</div>`
       : (v.shipping.length ? `<div><div class="section-label">Envío</div><div class="ship-row">${shipPills}</div></div>` : '');
     const contacts = v.contacts.map(c => {
       const type = c.type || 'otro';
@@ -1226,7 +1273,8 @@ function renderVendorCards(){
           const filled = Math.round(v.rating);
           const stars = '★'.repeat(filled) + '☆'.repeat(5 - filled);
           const plural = v.reviewCount !== 1 ? 's' : '';
-          return `<div class="vendor-rating"><span class="vendor-rating-stars">${stars}</span><span class="vendor-rating-num">${v.rating.toFixed(1)}</span><span class="vendor-rating-count">(${v.reviewCount} reseña${plural})</span></div>`;
+          const pos = (v.history && v.history.positive !== null && v.history.positive !== undefined) ? ` · ${Number(v.history.positive)}% positivas` : '';
+          return `<div class="vendor-rating"><span class="vendor-rating-stars">${stars}</span><span class="vendor-rating-num">${v.rating.toFixed(1)}</span><span class="vendor-rating-count">(${v.reviewCount} reseña${plural})${pos}</span></div>`;
         })()
       : '';
     const categoryTags = (v.categories||[]).length
@@ -1268,6 +1316,7 @@ function renderVendorCards(){
         </div>
       </div>
       ${ratingBlock}
+      ${historyHtml(v)}
       ${categoryTags}
       <div class="contacts">${contacts}</div>
       ${note}
@@ -1335,6 +1384,7 @@ function clearAllFilters(){
   searchTerm = '';
   freeShipOnly = false;
   favOnly = false;
+  shipCountryFilter = '';
   selectedCategory = null;
 
   const searchInput = document.getElementById('searchInput');
@@ -1342,6 +1392,8 @@ function clearAllFilters(){
   const searchClear = document.getElementById('searchClear');
   if(searchClear) searchClear.style.display = 'none';
 
+  const countrySel = document.getElementById('countryFilter');
+  if(countrySel) countrySel.value = '';
   const freeShipInput = document.getElementById('freeShipFilter');
   if(freeShipInput){ freeShipInput.checked = false; freeShipInput.closest('.filter-chip').classList.remove('active'); }
   const favInput = document.getElementById('favFilter');
@@ -1459,7 +1511,6 @@ function initTrackingTool(){
   if(resetBtn) resetBtn.addEventListener('click', resetTracking);
 }
 /* ---------------- RENDER: SHIPPING ---------------- */
-let shipCountryFilter = '';
 function renderShipping(){
   const grid = document.getElementById('shipGrid');
   const bar = document.getElementById('shipFilter');
@@ -1471,7 +1522,10 @@ function renderShipping(){
       : '';
     bar.querySelectorAll('.ship-chip').forEach(b=>b.addEventListener('click', ()=>{
       shipCountryFilter = b.dataset.country || '';
+      const sel = document.getElementById('countryFilter');
+      if(sel) sel.value = shipCountryFilter;
       renderShipping();
+      renderVendorCards();
     }));
   }
   const vendors = BASE_VENDORS.filter(v => !shipCountryFilter || shipCountryRows(v).some(c=>c.country===shipCountryFilter));
@@ -1715,15 +1769,28 @@ function openAllCatalogSearches(query){
 // que un link externo (el mensaje de bienvenida del bot, por ejemplo)
 // pueda mandar directo a "Cómo comprar", "Vendedores" o "Dudas
 // habituales" sin que la persona tenga que buscar la pestaña a mano.
+const GUIDE_TABS = ['guia','shopee','preguntas'];
 function selectTab(name){
   const panel = document.getElementById('panel-'+name);
   if(!panel) return false;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  const navTab = GUIDE_TABS.includes(name) ? 'guia' : name;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===navTab));
+  const sub = document.getElementById('guideSubnav');
+  if(sub){
+    sub.hidden = !GUIDE_TABS.includes(name);
+    sub.querySelectorAll('[data-guide]').forEach(b=>b.classList.toggle('active', b.dataset.guide===name));
+  }
   document.querySelectorAll('.panel').forEach(pnl=>pnl.classList.remove('active'));
   panel.classList.add('active');
   return true;
 }
 function initTabs(){
+  document.querySelectorAll('#guideSubnav [data-guide]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selectTab(btn.dataset.guide);
+      history.replaceState(null, '', '#'+btn.dataset.guide);
+    });
+  });
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       selectTab(btn.dataset.tab);
@@ -1780,6 +1847,12 @@ setTimeout(hideLoadingOverlay, 4000);
       input.value = '';
       document.getElementById('searchClear').style.display = 'none';
       input.focus();
+      renderVendorCards();
+    });
+    populateCountrySelect();
+    document.getElementById('countryFilter').addEventListener('change', (e)=>{
+      shipCountryFilter = e.target.value;
+      renderShipping();
       renderVendorCards();
     });
     document.getElementById('sortMode').addEventListener('change', (e)=>{
