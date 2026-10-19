@@ -4,20 +4,26 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>🏪 El Bazar | Vendedores</title>
-<meta content="Directorio y comparador de vendedores de la comunidad El Bazar: indumentaria, calzado, accesorios, contacto y envíos." name="description"/>
-<link href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;%F0%9F%8E%BD&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<title>El Bazar | Directorio de vendedores, guías de compra y envíos</title>
+<meta content="Directorio de vendedores de la comunidad El Bazar: reseñas, condiciones de envío por país, guías de compra e importación y rastreo de envíos." name="description"/>
+<link href="favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="favicon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="https://alewizard.github.io/el-bazar-catalogo/" rel="canonical"/>
+<meta content="index, follow, max-image-preview:large" name="robots"/>
+<meta content="#0a140e" name="theme-color"/>
+<meta content="El Bazar" property="og:site_name"/>
 <meta content="website" property="og:type"/>
 <meta content="https://alewizard.github.io/el-bazar-catalogo/" property="og:url"/>
-<meta content="El Bazar | Vendedores" property="og:title"/>
-<meta content="Directorio de vendedores de la comunidad El Bazar: indumentaria, calzado, accesorios, contacto y envíos." property="og:description"/>
+<meta content="El Bazar | Directorio de vendedores, guías de compra y envíos" property="og:title"/>
+<meta content="Directorio de vendedores de la comunidad El Bazar: reseñas, condiciones de envío por país, guías de compra e importación y rastreo de envíos." property="og:description"/>
 <meta content="https://alewizard.github.io/el-bazar-catalogo/og-image.jpg" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="es_AR" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="El Bazar | Vendedores" name="twitter:title"/>
-<meta content="Directorio de vendedores de la comunidad El Bazar: indumentaria, calzado, accesorios, contacto y envíos." name="twitter:description"/>
+<meta content="El Bazar | Directorio de vendedores, guías de compra y envíos" name="twitter:title"/>
+<meta content="Directorio de vendedores de la comunidad El Bazar: reseñas, condiciones de envío por país, guías de compra e importación y rastreo de envíos." name="twitter:description"/>
 <meta content="https://alewizard.github.io/el-bazar-catalogo/og-image.jpg" name="twitter:image"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
@@ -739,6 +745,7 @@ html{scroll-behavior:smooth;}
 </style>
 <style>
 .guide-subnav[hidden]{display:none;}
+h1.pitch-ticker{margin:0; font-weight:400;}
 .card-head{flex-wrap:wrap; row-gap:8px;}
 .card-title{flex-wrap:wrap; min-width:0;}
 .vendor-history{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 2px;}
@@ -747,11 +754,12 @@ html{scroll-behavior:smooth;}
 .history-reviews summary{cursor:pointer; font-size:12px; color:var(--text-dim);}
 .history-review{font-size:13px; margin-top:6px; color:var(--text); line-height:1.45;}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://alewizard.github.io/el-bazar-catalogo/#website","url":"https://alewizard.github.io/el-bazar-catalogo/","name":"El Bazar","inLanguage":"es","description":"Directorio de vendedores de la comunidad El Bazar: reseñas, condiciones de envío por país, guías de compra e importación y rastreo de envíos."},{"@type":"Organization","@id":"https://alewizard.github.io/el-bazar-catalogo/#org","name":"El Bazar","url":"https://alewizard.github.io/el-bazar-catalogo/","logo":"https://alewizard.github.io/el-bazar-catalogo/og-image.jpg"}]}</script>
 </head>
 <body>
 <div aria-hidden="true" class="goal-net-bg"></div>
 <div aria-hidden="true" class="ball-watermark-bg"></div>
-<div class="pitch-ticker">Vendedores de El Bazar</div>
+<h1 class="pitch-ticker">Vendedores de El Bazar</h1>
 <a class="community-banner" href="https://t.me/+FatP2mW19KtmOTAx" target="_blank" rel="noopener">
 <span class="community-banner-icon" aria-hidden="true">✈️</span>
 <span class="community-banner-text"><strong>Unite al grupo de Telegram</strong> — preguntá, seguí tus envíos, dejá tu reseña y enterate de lo nuevo</span>
@@ -1047,7 +1055,6 @@ html{scroll-behavior:smooth;}
     ¿Se queda pegado acá? Si abriste este archivo desde <b>WhatsApp o Instagram</b>, tocá el ícono de compartir y elegí <b>"Abrir con Chrome"</b> (o Safari) en vez de verlo dentro de la app — el visor interno no siempre puede mostrar esta página.
   </div>
 </div>
-<script src="https://www.17track.net/externalcall.js"></script>
 <script>
 /* ---------------- DATA MODEL ---------------- */
 const CATS = [
@@ -1487,7 +1494,13 @@ function initTrackingTool(){
       return;
     }
     if(typeof YQV5 === 'undefined' || !YQV5.trackSingle){
-      hint.textContent = 'No se pudo cargar el rastreo embebido (revisá tu conexión). Podés intentar de nuevo en unos segundos.';
+      const errorCarga = 'No se pudo cargar el rastreo embebido (revisá tu conexión). Podés intentar de nuevo en unos segundos.';
+      hint.textContent = 'Cargando el rastreo…';
+      cargarWidgetRastreo().then(()=>{
+        if(typeof YQV5 === 'undefined' || !YQV5.trackSingle){ hint.textContent = errorCarga; return; }
+        hint.textContent = '';
+        goTrack();
+      }).catch(()=>{ hint.textContent = errorCarga; });
       return;
     }
     hint.textContent = '';
@@ -1771,6 +1784,19 @@ function openAllCatalogSearches(query){
 // que un link externo (el mensaje de bienvenida del bot, por ejemplo)
 // pueda mandar directo a "Cómo comprar", "Vendedores" o "Dudas
 // habituales" sin que la persona tenga que buscar la pestaña a mano.
+let _widgetRastreoPromesa = null;
+function cargarWidgetRastreo(){
+  if(_widgetRastreoPromesa) return _widgetRastreoPromesa;
+  _widgetRastreoPromesa = new Promise((ok, fallo)=>{
+    const sc = document.createElement('script');
+    sc.src = 'https://www.17track.net/externalcall.js';
+    sc.async = true;
+    sc.onload = ok;
+    sc.onerror = ()=>{ _widgetRastreoPromesa = null; fallo(new Error('no cargó')); };
+    document.head.appendChild(sc);
+  });
+  return _widgetRastreoPromesa;
+}
 const GUIDE_TABS = ['guia','shopee','preguntas'];
 function selectTab(name){
   const panel = document.getElementById('panel-'+name);
@@ -1784,6 +1810,7 @@ function selectTab(name){
   }
   document.querySelectorAll('.panel').forEach(pnl=>pnl.classList.remove('active'));
   panel.classList.add('active');
+  if(name === 'rastreo') cargarWidgetRastreo().catch(()=>{});
   return true;
 }
 function initTabs(){
