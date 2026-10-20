@@ -257,6 +257,7 @@
   .section-label{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-faint); margin:2px 0 -4px; }
   .price-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:4px 14px; font-size:13px;}
   .price-list li{display:flex; justify-content:space-between; gap:8px; border-bottom:1px dashed var(--line-soft); padding:3px 0; color:var(--text-dim);}
+  .price-note{font-size:11px; color:var(--text-dim); margin-top:6px;}
   .price-list li .v{color:var(--text); font-family:'JetBrains Mono',monospace; font-weight:500;}
   .ship-row{display:flex; flex-wrap:wrap; gap:6px;}
   .ship-pill{ font-family:'JetBrains Mono',monospace; font-size:12px; background:rgba(242,183,5,0.07); border:1px solid rgba(242,183,5,0.25); color:var(--text); padding:4px 9px; border-radius:6px; }
@@ -1262,9 +1263,10 @@ function renderVendorCards(){
   }
 
   grid.innerHTML = vendors.map((v, idx) => {
-    const priceItems = v.prices.map(pr => `<li><span>${pr.label}</span><span class="v">${pr.value}</span></li>`).join('');
+    const priceItems = v.prices.map(pr => `<li><span>${escapeHtml(pr.label)}</span><span class="v">${escapeHtml(pr.value)}</span></li>`).join('');
+    const priceDate = v.pricesUpdated ? v.pricesUpdated.split('-').reverse().join('/') : '';
     const shipPills = v.shipping.map(s => `<span class="ship-pill">${s.label}: ${s.value}</span>`).join('');
-    const priceBlock = v.prices.length ? `<div><div class="section-label">Precios</div><ul class="price-list">${priceItems}</ul></div>` : '';
+    const priceBlock = v.prices.length ? `<div><div class="section-label">Precios</div><ul class="price-list">${priceItems}</ul><div class="price-note">Precios orientativos${priceDate ? ' · actualizados el ' + priceDate : ''}. Confirmá con el vendedor.</div></div>` : '';
     const countryShip = shipCountryRows(v);
     const shipBlock = countryShip.length
       ? `<div><div class="section-label">Envío</div>${[...countryShip].sort((a,b)=>(b.country===shipCountryFilter)-(a.country===shipCountryFilter)).map(shipCountryHtml).join('')}</div>`
