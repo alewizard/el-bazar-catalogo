@@ -351,7 +351,7 @@
   .quick-nav a{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);text-decoration:none;font-size:12px;font-weight:600;transition:.15s ease;}
   .quick-nav a:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-1px);}
   #panel-guia .note,
-#panel-shopee .note,#panel-preguntas .note,#panel-legal .note,#panel-ming .note,#panel-matchday .note,#panel-buscar .note{box-shadow:var(--shadow-sm);}
+#panel-shopee .note,#panel-preguntas .note,#panel-legal .note,#panel-ming .note,#panel-eric .note,#panel-matchday .note,#panel-buscar .note{box-shadow:var(--shadow-sm);}
   #panel-guia .note,
 #panel-shopee .note{position:relative;padding-left:20px;}
   #panel-guia .note h3,
@@ -637,7 +637,7 @@ html{scroll-behavior:smooth;}
 .quick-nav a:hover,.quick-nav a:focus-visible{transform:translateY(-1px);border-color:var(--amber);outline:none;}
 .tutorial-intro{font-size:1rem;line-height:1.7;color:var(--text);}
 #panel-guia .note,
-#panel-shopee .note,#panel-preguntas .note,#panel-ming .note,#panel-matchday .note{scroll-margin-top:90px;}
+#panel-shopee .note,#panel-preguntas .note,#panel-ming .note,#panel-eric .note,#panel-matchday .note{scroll-margin-top:90px;}
 .tutorial-step-actions{display:flex;justify-content:flex-end;margin-top:12px;}
 .tutorial-step-actions a{color:var(--text);text-decoration:none;font-weight:700;}
 .back-top{position:fixed;right:18px;bottom:18px;z-index:1000;display:none;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--text);font-size:20px;font-weight:700;box-shadow:var(--shadow-sm);cursor:pointer;}
@@ -646,13 +646,13 @@ html{scroll-behavior:smooth;}
   .quick-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .quick-nav a{width:100%;box-sizing:border-box;font-size:.92rem;padding:9px 8px;}
   #panel-guia .compare-card,
-#panel-shopee .compare-card,#panel-preguntas .compare-card,#panel-ming .compare-card,#panel-matchday .compare-card,#panel-buscar .compare-card{padding:15px!important;}
+#panel-shopee .compare-card,#panel-preguntas .compare-card,#panel-ming .compare-card,#panel-eric .compare-card,#panel-matchday .compare-card,#panel-buscar .compare-card{padding:15px!important;}
   #panel-guia h2,
-#panel-shopee h2,#panel-preguntas h2,#panel-ming h2,#panel-matchday h2,#panel-buscar h2{font-size:1.35rem;}
+#panel-shopee h2,#panel-preguntas h2,#panel-ming h2,#panel-eric h2,#panel-matchday h2,#panel-buscar h2{font-size:1.35rem;}
   #panel-guia h3,
-#panel-shopee h3,#panel-preguntas h3,#panel-ming h3,#panel-matchday h3,#panel-buscar h3{font-size:1.05rem;line-height:1.35;}
+#panel-shopee h3,#panel-preguntas h3,#panel-ming h3,#panel-eric h3,#panel-matchday h3,#panel-buscar h3{font-size:1.05rem;line-height:1.35;}
   #panel-guia p,
-#panel-shopee p,#panel-preguntas p,#panel-preguntas li,#panel-ming p,#panel-ming li,#panel-matchday p,#panel-matchday li,#panel-buscar p,#panel-buscar li{font-size:.96rem;line-height:1.65;}
+#panel-shopee p,#panel-preguntas p,#panel-preguntas li,#panel-ming p,#panel-ming li,#panel-eric p,#panel-eric li,#panel-matchday p,#panel-matchday li,#panel-buscar p,#panel-buscar li{font-size:.96rem;line-height:1.65;}
   #panel-ming img{max-width:100%;height:auto;border-radius:10px;}
 }
 
@@ -778,6 +778,7 @@ h1.pitch-ticker{margin:0; font-weight:400;}
 <div class="ship-filter guide-subnav" id="guideSubnav" hidden>
 <button type="button" class="ship-chip" data-guide="guia">Cómo comprar</button>
 <button type="button" class="ship-chip" data-guide="shopee">🛍️ Shopee</button>
+<button type="button" class="ship-chip" data-guide="eric">📦 Pedir con Eric</button>
 <button type="button" class="ship-chip" data-guide="preguntas">Dudas habituales</button>
 </div>
 <section class="panel active" id="panel-lista">
@@ -931,6 +932,76 @@ h1.pitch-ticker{margin:0; font-weight:400;}
 <p>Si el paquete queda observado por Aduana o se requiere documentación adicional, seguí las instrucciones del operador y de ARCA.</p>
 </div>
 <div class="note" style="margin:16px 0;"><h3 style="margin-top:0;">📌 Resumen rápido</h3><ul style="line-height:1.8;"><li><strong>Uso personal:</strong> podés utilizar los regímenes simplificados si cumplís sus requisitos.</li><li><strong>Hasta USD 400 FOB:</strong> existe franquicia de derechos de importación y tasa de estadística en los regímenes indicados, pero pueden corresponder otros impuestos.</li><li><strong>Más de USD 400:</strong> se aplican los tributos correspondientes sobre el excedente, según el régimen.</li><li><strong>5 envíos:</strong> el límite anual de la franquicia es de 5 envíos por persona.</li><li><strong>Declaración:</strong> siempre debe reflejar la cantidad y el valor reales de la compra.</li><li><strong>Compra comercial:</strong> no debe encuadrarse artificialmente como uso personal; corresponde analizar el régimen de importación aplicable.</li></ul></div>
+</div>
+</section>
+<section class="panel" id="panel-eric">
+<div class="compare-card" style="padding:20px;">
+<h2 style="margin-top:0;">📦 Cómo pedirle a Eric</h2>
+<div class="tutorial-intro"><p>Usá esta guía cuando quieras comprar con Eric. Trabaja con dos esquemas distintos de precios y logística según el país de destino: Argentina (precios en USD, flete aparte) y España/Europa (precios en EUR, envío incluido).</p></div>
+<p>Eric es un proveedor directo de indumentaria deportiva (fútbol, NBA, MLB, NFL, retro, botines y accesorios). Ofrece atención personalizada y la posibilidad de personalizar camisetas. Podés escribirle por <a href="https://wa.me/8618045895247" rel="noopener" target="_blank">WhatsApp</a> (+86 180 4589 5247) o por <a href="https://t.me/JerseytroveEric2" rel="noopener" target="_blank">Telegram</a> (@JerseytroveEric2). Sus precios completos están en su ficha de la pestaña <strong>Vendedores</strong>.</p>
+<h3>Cómo realizar el pedido</h3>
+<ol style="line-height:1.8; padding-left:22px;">
+<li><strong>Armá el pedido y pedí la cotización.</strong> Mandale a Eric los modelos, talles y personalizaciones (nombre, número, parches). Él confirma si hay stock y calcula el subtotal de las prendas.</li>
+<li><strong>Pagá las prendas.</strong> Los productos se abonan directamente a Eric por PayPal.</li>
+<li><strong>Esperá la preparación y el despacho en China (3 a 5 días).</strong> Eric prepara los artículos, estampa dorsales y parches y despacha la carga al depósito del courier en China. No necesitás gestionar casilleros ni coordinar trámites de flete en origen.</li>
+<li><strong>Tránsito y entrega final.</strong>
+<ul style="line-height:1.7; padding-left:20px; margin-top:6px;">
+<li><strong>Argentina:</strong> el flete no se paga por adelantado. Cuando el paquete llega a Paraguay, el courier se comunica con vos para cotizar el flete y coordinar la entrega por Vía Cargo a la sucursal que elijas.</li>
+<li><strong>España / Europa:</strong> el pedido viaja directo a tu domicilio, sin costos adicionales.</li>
+</ul></li>
+</ol>
+
+<div class="note" style="margin:16px 0;">
+<h3 style="margin-top:0;">Argentina: los precios no incluyen el envío</h3>
+<p>Los precios en USD de la ficha son solo de las prendas. El flete se calcula según el peso total del paquete: aproximadamente 0,20 a 0,25 kg por camiseta, según talle y estampas.</p>
+<p>Ejemplo orientativo: 4 camisetas pesan entre 0,8 y 1 kg, o sea unos 36 a 45 USD de flete con Golden Box (45 USD/kg) o unos 28 a 35 USD con EMS (35 USD/kg). Ese monto se suma a lo que pagás por las prendas.</p>
+</div>
+
+<div class="note" style="margin:16px 0;">
+<h3 style="margin-top:0;">Métodos de envío a Argentina</h3>
+<p><strong>1. EMS (China Post)</strong></p>
+<ul style="line-height:1.7;">
+<li>Tarifa: 35 USD por kilo.</li>
+<li>Tiempo estimado: 15 a 25 días hábiles.</li>
+<li>Envío postal estándar. Requiere gestión aduanera, pago de aranceles en Correo Argentino / ARCA y descuenta de los cupos anuales.</li>
+</ul>
+<p><strong>2. Courier privado: Golden Box Express (recomendado por Eric)</strong></p>
+<ul style="line-height:1.7;">
+<li>Tarifa: 45 USD por kilo.</li>
+<li>Tiempo estimado: 20 a 25 días hábiles hasta Paraguay, más el despacho local. Total aproximado: 30 a 35 días.</li>
+<li>Según el courier, llega por triangulación directa: no pasa por la aduana tradicional, no consume el cupo anual y permite ingresar cantidad sin límite comercial.</li>
+</ul>
+</div>
+
+<div class="note" style="margin:16px 0;">
+<h3 style="margin-top:0;">Courier privado: ventajas y cosas a tener en cuenta</h3>
+<p><strong>Ventajas</strong></p>
+<ul style="line-height:1.7;">
+<li>Sin límite de prendas por pedido.</li>
+<li>No consume los cupos anuales de importación.</li>
+<li>Evita retenciones aduaneras y trámites en ARCA / Correo Argentino.</li>
+</ul>
+<p><strong>A tener en cuenta</strong></p>
+<ul style="line-height:1.7;">
+<li>No tiene código de seguimiento en tiempo real (tipo 17TRACK), así que no vas a poder seguirlo desde la pestaña 🚚 Rastrear envío.</li>
+<li>El plazo total de entrega es de 30 a 35 días corridos.</li>
+</ul>
+<p>Si en cambio elegís EMS, el trámite en Argentina es el habitual: seguí los pasos de <a href="#guia" onclick="selectTab('guia'); history.replaceState(null,'','#guia'); window.scrollTo(0,0); return false;">Cómo comprar paso a paso</a>.</p>
+</div>
+
+<div class="note" style="margin:16px 0;">
+<h3 style="margin-top:0;">España y Europa</h3>
+<ul style="line-height:1.7;">
+<li>Todos los precios (en EUR) ya incluyen el envío a domicilio.</li>
+<li>Pedido mínimo: 5 unidades en total.</li>
+<li>Los precios están en la ficha de Eric, dentro de "Ver datos adicionales".</li>
+</ul>
+</div>
+
+<div class="note" style="margin:16px 0;">
+<h3 style="margin-top:0;">En resumen</h3>
+<p>Le pasás a Eric tu pedido, le pagás las prendas por PayPal y él las prepara y las manda al depósito del courier en China (3 a 5 días). Para Argentina, el flete se cotiza y se abona recién cuando el paquete llega a Paraguay (45 USD/kg con Golden Box, 35 USD/kg con EMS) y la entrega se coordina por Vía Cargo. Para España y Europa, el precio ya incluye el envío a domicilio.</p>
+</div>
 </div>
 </section>
 <section class="panel" id="panel-shopee">
@@ -1821,7 +1892,7 @@ function cargarWidgetRastreo(){
   });
   return _widgetRastreoPromesa;
 }
-const GUIDE_TABS = ['guia','shopee','preguntas'];
+const GUIDE_TABS = ['guia','shopee','eric','preguntas'];
 function selectTab(name){
   const panel = document.getElementById('panel-'+name);
   if(!panel) return false;
